@@ -7,7 +7,12 @@ import DatabaseProvider from '@/providers/database-provider';
 export default function Layout() {
   return (
     <DatabaseProvider>
-      <Stack />
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="lists/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="tasks/index" options={{ headerShown: false }} />
+        <Stack.Screen name="tasks/[id]" options={{ headerShown: false }} />
+      </Stack>
     </DatabaseProvider>
   );
 }
