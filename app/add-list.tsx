@@ -52,8 +52,8 @@ const Page = () => {
           defaultValue=""
         />
         <Button
-          className="rounded-md bg-indigo-500 shadow-sm"
-          title="Add a New List"
+          className="rounded-md bg-green-500 shadow-sm"
+          title="Add New List"
           onPress={handleSubmit(onSubmit)}
         />
       </View>

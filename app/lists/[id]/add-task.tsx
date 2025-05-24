@@ -172,7 +172,7 @@ const Page = () => {
           rules={{ required: true }}
         />
         <Button
-          className="rounded-md bg-indigo-500 shadow-sm"
+          className="rounded-md bg-green-500 shadow-sm"
           title="Add New Task"
           onPress={handleSubmit(onSubmit)}
         />
