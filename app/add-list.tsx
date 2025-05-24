@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
 
@@ -5,19 +6,30 @@ import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
-import { createList } from '@/queries/lists';
+import { ListFormData, listSchema } from '@/lib/validators/listSchema';
+import { useListStore } from '@/store/listStore';
 
 const Page = () => {
-  const { control, handleSubmit } = useForm();
+  const { createNewList, fetchLists } = useListStore();
+  const { control, handleSubmit } = useForm<ListFormData>({
+    resolver: zodResolver(listSchema),
+  });
 
-  const onSubmit = async (data: any) => {
-    const response = await createList(data.name);
-    if (response.changes) {
-      Alert.alert('Success', 'List created successfully');
-    } else {
-      Alert.alert('Error', 'Failed to create list');
+  const onSubmit = async (FormData: ListFormData) => {
+    try {
+      const response = await createNewList(FormData.name);
+      if (response?.success) {
+        Alert.alert('Success', response.message || 'List created successfully');
+        fetchLists();
+      } else {
+        Alert.alert('Error', response?.message || 'Failed to create list');
+      }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      Alert.alert('Error', 'An unexpected error occurred while creating the list');
     }
   };
+
   return (
     <Container>
       <Title title="Add List" onBackPress />
