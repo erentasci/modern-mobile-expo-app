@@ -1,10 +1,16 @@
 import '../global.css';
 
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
 
+import { initDB } from '@/db';
 import DatabaseProvider from '@/providers/database-provider';
 
 export default function Layout() {
+  useEffect(() => {
+    initDB();
+  }, []);
+
   return (
     <DatabaseProvider>
       <Stack>

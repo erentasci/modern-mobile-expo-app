@@ -1,16 +1,22 @@
 import { Controller, useForm } from 'react-hook-form';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
+import { createList } from '@/queries/lists';
 
 const Page = () => {
   const { control, handleSubmit } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    const response = await createList(data.name);
+    if (response.changes) {
+      Alert.alert('Success', 'List created successfully');
+    } else {
+      Alert.alert('Error', 'Failed to create list');
+    }
   };
   return (
     <Container>

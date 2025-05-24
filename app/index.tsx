@@ -1,13 +1,34 @@
 import { Stack, useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { Container } from '@/components/Container';
 import SearchFilter from '@/components/SearchFilter';
 import TaskItem from '@/components/TaskItem';
 import Title from '@/components/Title';
+import { getAllLists } from '@/queries/lists';
+import { List } from '@/types';
 
 export default function Home() {
   const router = useRouter();
+  const [lists, setLists] = useState<List[]>([]);
+
+  useEffect(() => {
+    const fetchList = async () => {
+      const response = await getAllLists();
+      try {
+        if (response) {
+          setLists(response);
+        } else {
+          console.error('Failed to fetch lists');
+        }
+      } catch (error) {
+        console.error('Error fetching lists:', error);
+      }
+    };
+
+    fetchList();
+  }, []);
 
   return (
     <Container>
@@ -26,16 +47,16 @@ export default function Home() {
         onFilterPress={() => console.log('Filter')}
       />
       <FlatList
-        data={[1, 2, 3, 4, 5, 6, 7]}
-        renderItem={({ item }) => (
+        data={lists}
+        renderItem={({ item }: { item: List }) => (
           <TaskItem
-            title={`Task List ${item} AJSDASDADSASDASDASDASDAS`}
+            title={`${item.name.toString()}`}
             description="Lorem ipsum dolor sit amet"
-            link="/lists/1"
+            link={`lists/${item.id}`}
             bgColor="bg-blue-500"
           />
         )}
-        keyExtractor={(item) => item.toString()}
+        keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
       />
     </Container>
