@@ -13,10 +13,10 @@ interface DatabaseProviderProps {
 
 export default function DatabaseProvider(props: DatabaseProviderProps) {
   const { success, error } = useMigrations(db, migrations);
-  console.log('success', success);
-  if (error) {
-    console.error('Migration error:', error);
-  }
+  // console.log('success', success);
+  // if (error) {
+  //   console.error('Migration error:', error);
+  // }
 
   return (
     <Suspense fallback={<ActivityIndicator size="large" />}>

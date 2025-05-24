@@ -11,7 +11,7 @@ const Page = () => {
 
   return (
     <Container>
-      <Title title="List Detail" />
+      <Title title="List Detail" onBackPress />
       <Text className="text-center text-2xl font-bold">List ID: {id}</Text>
     </Container>
   );

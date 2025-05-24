@@ -20,7 +20,7 @@ const Page = () => {
   };
   return (
     <Container>
-      <Title title="Add List" />
+      <Title title="Add List" onBackPress />
       <View className="flex flex-col gap-5">
         <Controller
           control={control}
