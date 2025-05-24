@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { FlatList } from 'react-native';
 
 import Container from '@/components/Container';
+import ListItem from '@/components/ListItem';
 import SearchFilter from '@/components/SearchFilter';
-import ListItem from '@/components/TaskItem';
 import Title from '@/components/Title';
 import { COLORS } from '@/lib/contants';
 import { useListStore } from '@/store/listStore';
