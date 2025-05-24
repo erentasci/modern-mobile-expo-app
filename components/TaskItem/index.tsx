@@ -7,7 +7,7 @@ import { ListItemProps } from './types';
 
 const ListItem = ({ link, title, bgColor }: ListItemProps) => {
   return (
-    <Link href={link as any} className="mt-4">
+    <Link href={link as any}>
       <View className={[styles.taskItemContainer, bgColor].join(' ')}>
         <View className={styles.textContainer}>
           <Text className={styles.title}>

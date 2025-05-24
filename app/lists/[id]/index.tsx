@@ -1,8 +1,8 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 
-import { Container } from '@/components/Container';
+import Container from '@/components/Container';
 import Title from '@/components/Title';
 import { useListStore } from '@/store/listStore';
 import { useTaskStore } from '@/store/taskStore';
@@ -42,7 +42,30 @@ const Page = () => {
         buttonBgColor="bg-bleue-500"
         buttonIcon="add"
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
+
+      <FlatList
+        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        contentContainerClassName="gap-4 mt-2"
+        renderItem={() => (
+          <View className="flex w-full flex-row items-center gap-2 rounded bg-red-200 p-2">
+            <View className="h-20 w-20 rounded-full bg-gray-400" />
+            <View className="flex flex-1 flex-col gap-2 bg-green-500 p-2">
+              <Text>Başlık</Text>
+              <Text>Açıklama</Text>
+              <View className="flex flex-row items-center gap-2 bg-red-600 p-1">
+                <View className="flex flex-col gap-2">
+                  <Text className="text-sm text-gray-500">Durum: </Text>
+                  <Text className="text-sm text-gray-500">Öncelik: </Text>
+                </View>
+                <Text className="ml-auto bg-neutral-600">05.10.2023</Text>
+              </View>
+            </View>
+          </View>
+        )}
+        keyExtractor={(item) => item.toString()}
+        showsVerticalScrollIndicator={false}
+      />
+      {/* <ScrollView showsVerticalScrollIndicator={false}>
         {tasks.length > 0 ? (
           tasks.map((task) => (
             <View key={task.id} className="border-b border-gray-200 p-4">
@@ -60,7 +83,7 @@ const Page = () => {
             <Text>No tasks available</Text>
           </View>
         )}
-      </ScrollView>
+      </ScrollView> */}
     </Container>
   );
 };

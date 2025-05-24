@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Container } from '@/components/Container';
+import Container from '@/components/Container';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
 import { ListFormData, listSchema } from '@/lib/validators/listSchema';

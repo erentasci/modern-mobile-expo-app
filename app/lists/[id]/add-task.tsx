@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { Alert, View } from 'react-native';
 
 import { Button } from '@/components/Button';
-import { Container } from '@/components/Container';
+import Container from '@/components/Container';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
 import { TaskFormData, taskSchema } from '@/lib/validators/taskSchema';
@@ -13,13 +13,8 @@ import { useTaskStore } from '@/store/taskStore';
 const Page = () => {
   const { id } = useLocalSearchParams();
 
-  const { createNewTaskById } = useTaskStore();
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<TaskFormData>({
+  const { createNewTaskById, fetchTasksByListId } = useTaskStore();
+  const { control, handleSubmit, reset } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
   });
 
@@ -40,6 +35,7 @@ const Page = () => {
       };
       const response = await createNewTaskById(newTask, Number(id));
       if (response?.success) {
+        fetchTasksByListId(Number(id));
         Alert.alert('Success', response.message);
         reset();
       } else {
@@ -51,9 +47,6 @@ const Page = () => {
       Alert.alert('Error', 'An unexpected error occurred while creating the task');
     }
   };
-
-  console.log('errors:', errors);
-  console.log('id:', id);
 
   return (
     <Container>

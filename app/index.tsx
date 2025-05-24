@@ -2,7 +2,7 @@ import { Stack, useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { FlatList } from 'react-native';
 
-import { Container } from '@/components/Container';
+import Container from '@/components/Container';
 import SearchFilter from '@/components/SearchFilter';
 import ListItem from '@/components/TaskItem';
 import Title from '@/components/Title';
@@ -36,6 +36,7 @@ export default function Home() {
       />
       <FlatList
         data={lists}
+        contentContainerClassName="gap-4 mt-4"
         renderItem={({ item, index }: { item: List; index: number }) => (
           <ListItem
             title={item.name.toString()}
