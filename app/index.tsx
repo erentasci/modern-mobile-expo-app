@@ -1,33 +1,20 @@
 import { Stack, useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FlatList } from 'react-native';
 
 import { Container } from '@/components/Container';
 import SearchFilter from '@/components/SearchFilter';
 import TaskItem from '@/components/TaskItem';
 import Title from '@/components/Title';
-import { getAllLists } from '@/queries/lists';
+import { useListStore } from '@/store/listStore';
 import { List } from '@/types';
 
 export default function Home() {
   const router = useRouter();
-  const [lists, setLists] = useState<List[]>([]);
+  const { lists, fetchLists } = useListStore();
 
   useEffect(() => {
-    const fetchList = async () => {
-      const response = await getAllLists();
-      try {
-        if (response) {
-          setLists(response);
-        } else {
-          console.error('Failed to fetch lists');
-        }
-      } catch (error) {
-        console.error('Error fetching lists:', error);
-      }
-    };
-
-    fetchList();
+    fetchLists();
   }, []);
 
   return (
