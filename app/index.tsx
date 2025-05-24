@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { FlatList } from 'react-native';
 
 import { Container } from '@/components/Container';
@@ -7,12 +7,14 @@ import TaskItem from '@/components/TaskItem';
 import Title from '@/components/Title';
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <Container>
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <Title
         title="Lists"
-        onPress={() => console.log('Add New List')}
+        onPress={() => router.push('/add-list')}
         buttonColor="white"
         buttonBgColor="bg-bleue-500"
         buttonIcon="add"

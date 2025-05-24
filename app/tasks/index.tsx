@@ -1,10 +1,11 @@
-import { Text, View } from 'react-native';
+import { Container } from '@/components/Container';
+import Title from '@/components/Title';
 
 const Page = () => {
   return (
-    <View>
-      <Text>Page</Text>
-    </View>
+    <Container>
+      <Title title="Tasks" />
+    </Container>
   );
 };
 
