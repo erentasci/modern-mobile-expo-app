@@ -1,6 +1,5 @@
-export type TaskItemProps = {
+export type ListItemProps = {
   link: string;
   title: string;
-  description: string;
   bgColor: string;
 };

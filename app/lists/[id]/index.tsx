@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { Container } from '@/components/Container';
 import Title from '@/components/Title';
+import { getTasksByListId } from '@/queries/tasks';
 import { useListStore } from '@/store/listStore';
 import { List } from '@/types';
 
@@ -24,7 +25,13 @@ const Page = () => {
       }
     };
 
+    const fetchTasks = async () => {
+      const response = await getTasksByListId(Number(id));
+      console.log('Tasks for list:', response);
+    };
+
     fetchList();
+    fetchTasks();
   }, [id]);
 
   return (

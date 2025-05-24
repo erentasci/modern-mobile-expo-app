@@ -19,10 +19,10 @@ const Page = () => {
     try {
       const response = await createNewList(FormData.name);
       if (response?.success) {
-        Alert.alert('Success', response.message || 'List created successfully');
+        Alert.alert('Success', response.message);
         fetchLists();
       } else {
-        Alert.alert('Error', response?.message || 'Failed to create list');
+        Alert.alert('Error', response?.message);
       }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {

@@ -4,8 +4,9 @@ import { FlatList } from 'react-native';
 
 import { Container } from '@/components/Container';
 import SearchFilter from '@/components/SearchFilter';
-import TaskItem from '@/components/TaskItem';
+import ListItem from '@/components/TaskItem';
 import Title from '@/components/Title';
+import { COLORS } from '@/lib/contants';
 import { useListStore } from '@/store/listStore';
 import { List } from '@/types';
 
@@ -35,12 +36,11 @@ export default function Home() {
       />
       <FlatList
         data={lists}
-        renderItem={({ item }: { item: List }) => (
-          <TaskItem
-            title={`${item.name.toString()}`}
-            description="Lorem ipsum dolor sit amet"
+        renderItem={({ item, index }: { item: List; index: number }) => (
+          <ListItem
+            title={item.name.toString()}
             link={`lists/${item.id}`}
-            bgColor="bg-blue-500"
+            bgColor={COLORS[index % COLORS.length]}
           />
         )}
         keyExtractor={(item) => item.id.toString()}

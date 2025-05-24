@@ -3,9 +3,9 @@ import { Link } from 'expo-router';
 import { Text, View } from 'react-native';
 
 import { styles } from './styles';
-import { TaskItemProps } from './types';
+import { ListItemProps } from './types';
 
-const TaskItem = ({ link, title, bgColor }: TaskItemProps) => {
+const ListItem = ({ link, title, bgColor }: ListItemProps) => {
   return (
     <Link href={link as any} className="mt-4">
       <View className={[styles.taskItemContainer, bgColor].join(' ')}>
@@ -20,4 +20,4 @@ const TaskItem = ({ link, title, bgColor }: TaskItemProps) => {
   );
 };
 
-export default TaskItem;
+export default ListItem;
