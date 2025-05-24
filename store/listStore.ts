@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { createList, getAllLists } from '@/queries/lists';
+import { createList, getAllLists, getListById } from '@/queries/lists';
 import { List } from '@/types';
 
 export interface ListState {
@@ -8,6 +8,7 @@ export interface ListState {
   setLists: (newLists: List[]) => void;
   fetchLists: () => Promise<void>;
   createNewList: (name: string) => Promise<{ success: boolean; message?: string } | undefined>;
+  getListById: (id: number) => Promise<List | undefined>;
 }
 
 export const useListStore = create<ListState>((set) => ({
@@ -46,6 +47,17 @@ export const useListStore = create<ListState>((set) => ({
         success: false,
         message: 'Failed to create list',
       };
+    }
+  },
+  getListById: async (id: number) => {
+    try {
+      const response = await getListById(id);
+      if (response) {
+        console.log('List fetched successfully:', response);
+        return response;
+      }
+    } catch (error) {
+      console.error('Error fetching list by ID:', error);
     }
   },
 }));

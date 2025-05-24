@@ -9,6 +9,7 @@ const Input = ({ placeHolderText, placeholderTextColor, ...props }: InputProps) 
       placeholder={placeHolderText}
       className={styles.input}
       placeholderTextColor={placeholderTextColor}
+      autoCapitalize="none"
       {...props}
     />
   );

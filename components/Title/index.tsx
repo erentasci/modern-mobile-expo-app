@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { TitleProps } from './types';
 
 const Title = ({
-  title,
+  title = 'List Details',
   onPress,
   onBackPress,
   buttonColor,
