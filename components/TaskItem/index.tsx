@@ -1,31 +1,66 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Image, Text, View } from 'react-native';
 
-const index = () => {
+import { styles } from './styles';
+import { TaskItemProps } from './types';
+
+const STATUS_COLOR = {
+  pending: 'bg-violet-500',
+  in_progress: 'bg-teal-500',
+  completed: 'bg-sky-500',
+};
+
+const PRIORITY_COLOR = {
+  low: 'bg-yellow-500',
+  medium: 'bg-orange-500',
+  high: 'bg-red-500',
+};
+
+type StatusKey = keyof typeof STATUS_COLOR;
+type PriorityKey = keyof typeof PRIORITY_COLOR;
+
+const TaskItem = ({
+  name,
+  description,
+  isCompleted,
+  image,
+  status,
+  priority,
+  dueDate,
+}: TaskItemProps & { status: StatusKey; priority: PriorityKey }) => {
   return (
-    <View className="flex w-full flex-row items-center gap-2 rounded border border-neutral-50 bg-neutral-200 px-4 py-2">
-      <Image
-        source={{ uri: 'https://picsum.photos/200/300' }}
-        className="h-24 w-24 rounded-full"
-        resizeMode="cover"
-        alt="Task Image"
-      />
-      <View className="flex flex-1 flex-col gap-2 p-2">
-        <Text className="text-lg font-bold text-neutral-800">Başlık</Text>
-        <Text className="text-sm text-neutral-500">Açıklama</Text>
-        <View className="flex flex-row items-center gap-2 p-1">
-          <View className="flex flex-col gap-2">
-            <Text className="rounded-full bg-red-400 px-3 py-1 text-center text-sm font-bold text-white">
-              Durum
+    <View className={styles.container}>
+      <Image source={{ uri: image }} className={styles.image} resizeMode="cover" alt="Task Image" />
+      <View className={styles.infoContainer}>
+        <View className="flex flex-row justify-between">
+          <Text className={styles.title}>{name}</Text>
+          {isCompleted ? (
+            <Ionicons name="checkmark-circle" size={28} color="green" />
+          ) : (
+            <Ionicons name="close-circle" size={28} color="red" />
+          )}
+        </View>
+        <Text className={styles.description}>{description}</Text>
+        <View className={styles.sub_info_container}>
+          <View className={styles.sub_texts}>
+            <Text className={[styles.status, STATUS_COLOR[status]].join(' ')}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
             </Text>
-            <Text className="rounded-full bg-red-400 px-3 py-1 text-center text-sm font-bold text-white">
-              Durum
+            <Text className={[styles.priority, PRIORITY_COLOR[priority]].join(' ')}>
+              {priority.charAt(0).toUpperCase() + priority.slice(1)}
             </Text>
           </View>
-          <Text className="ml-auto mt-auto text-neutral-500">05.10.2023</Text>
+          <Text className={styles.due_date}>
+            {new Date(dueDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            })}
+          </Text>
         </View>
       </View>
     </View>
   );
 };
 
-export default index;
+export default TaskItem;
