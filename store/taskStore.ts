@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 
-import { createTask } from '@/queries/tasks';
+import { createTask, getTasksByListId } from '@/queries/tasks';
 import { Task } from '@/types';
 
 export interface TaskState {
   tasks: Task[];
   setTasks: (newTasks: Task[]) => void;
   createNewTaskById: (task: Task, id: number) => Promise<{ success: boolean; message?: string }>;
+  fetchTasksByListId: (id: number) => Promise<{ success: boolean; message?: string }>;
 }
 
 export const useTaskStore = create<TaskState>((set) => ({
@@ -49,6 +50,21 @@ export const useTaskStore = create<TaskState>((set) => ({
         success: false,
         message: 'An unexpected error occurred while creating a new task',
       };
+    }
+  },
+  fetchTasksByListId: async (id: number) => {
+    try {
+      const response = await getTasksByListId(id);
+      if (response) {
+        set({ tasks: response });
+        return { success: true, message: 'Tasks fetched successfully' };
+      } else {
+        console.error('Failed to fetch tasks');
+        return { success: false, message: 'Failed to fetch tasks' };
+      }
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+      return { success: false, message: 'An unexpected error occurred while fetching tasks' };
     }
   },
 }));
