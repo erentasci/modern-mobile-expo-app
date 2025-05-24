@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
-import { Alert, View } from 'react-native';
+import { Alert, ScrollView, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import Container from '@/components/Container';
+import ErrorText from '@/components/ErrorText';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
 import { TaskFormData, taskSchema } from '@/lib/validators/taskSchema';
@@ -14,7 +15,12 @@ const Page = () => {
   const { id } = useLocalSearchParams();
 
   const { createNewTaskById, fetchTasksByListId } = useTaskStore();
-  const { control, handleSubmit, reset } = useForm<TaskFormData>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
   });
 
@@ -51,7 +57,7 @@ const Page = () => {
   return (
     <Container>
       <Title title="Add Task" onBackPress />
-      <View className="flex flex-col gap-5">
+      <ScrollView contentContainerClassName="flex flex-col gap-3 pb-6">
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -68,6 +74,7 @@ const Page = () => {
           name="name"
           rules={{ required: true }}
         />
+        {errors.name && <ErrorText message={errors.name.message} />}
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -84,6 +91,7 @@ const Page = () => {
           name="description"
           rules={{ required: true }}
         />
+        {errors.description && <ErrorText message={errors.description.message} />}
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -100,6 +108,7 @@ const Page = () => {
           name="image"
           rules={{ required: true }}
         />
+        {errors.image && <ErrorText message={errors.image.message} />}
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -116,6 +125,7 @@ const Page = () => {
           name="status"
           rules={{ required: true }}
         />
+        {errors.status && <ErrorText message={errors.status.message} />}
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -132,6 +142,7 @@ const Page = () => {
           name="priority"
           rules={{ required: true }}
         />
+        {errors.priority && <ErrorText message={errors.priority.message} />}
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -148,6 +159,7 @@ const Page = () => {
           name="is_completed"
           rules={{ required: true }}
         />
+        {errors.is_completed && <ErrorText message={errors.is_completed.message} />}
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -164,12 +176,13 @@ const Page = () => {
           name="due_date"
           rules={{ required: true }}
         />
+        {errors.due_date && <ErrorText message={errors.due_date.message} />}
         <Button
           className="rounded-md bg-green-500 shadow-sm"
           title="Add New Task"
           onPress={handleSubmit(onSubmit)}
         />
-      </View>
+      </ScrollView>
     </Container>
   );
 };

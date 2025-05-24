@@ -4,6 +4,7 @@ import { Alert, View } from 'react-native';
 
 import { Button } from '@/components/Button';
 import Container from '@/components/Container';
+import ErrorText from '@/components/ErrorText';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
 import { ListFormData, listSchema } from '@/lib/validators/listSchema';
@@ -11,7 +12,11 @@ import { useListStore } from '@/store/listStore';
 
 const Page = () => {
   const { createNewList, fetchLists } = useListStore();
-  const { control, handleSubmit } = useForm<ListFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ListFormData>({
     resolver: zodResolver(listSchema),
   });
 
@@ -29,6 +34,8 @@ const Page = () => {
       Alert.alert('Error', 'An unexpected error occurred while creating the list');
     }
   };
+
+  console.log('Form Errors:', errors.name?.message);
 
   return (
     <Container>
@@ -49,8 +56,8 @@ const Page = () => {
           )}
           name="name"
           rules={{ required: true }}
-          defaultValue=""
         />
+        {errors.name && <ErrorText message={errors.name.message} />}
         <Button
           className="rounded-md bg-green-500 shadow-sm"
           title="Add New List"

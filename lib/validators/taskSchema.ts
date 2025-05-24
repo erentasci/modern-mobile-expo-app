@@ -21,7 +21,7 @@ export const taskSchema = z.object({
     message: 'Priority must be one of low, medium, or high',
   }),
   is_completed: z.enum(['true', 'false'], {
-    message: 'is_completed must be either true or false',
+    message: 'Is completed must be either true or false',
   }),
   due_date: z.string().min(1, {
     message: 'Due date is required',
