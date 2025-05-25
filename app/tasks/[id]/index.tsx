@@ -43,12 +43,11 @@ const Page = () => {
       <Title
         title={currentList?.name?.toString() ?? ''}
         onBackPress
-        onPress={currentList ? () => router.push(`/lists/${id}/add-task`) : undefined}
+        onPress={currentList ? () => router.push(`/tasks/${id}/add-task`) : undefined}
         buttonColor="white"
         buttonBgColor="bg-bleue-500"
         buttonIcon="add"
       />
-      {/* DÜZENLENECEK */}
       <FlatList
         data={tasks}
         contentContainerClassName="gap-4 mt-2"

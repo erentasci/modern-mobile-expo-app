@@ -27,7 +27,7 @@ export default function Home() {
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <Title
         title="Lists"
-        onPress={() => router.push('/add-list')}
+        onPress={() => router.push('/lists/add-list')}
         buttonColor="white"
         buttonBgColor="bg-bleue-500"
         buttonIcon="add"
@@ -49,7 +49,7 @@ export default function Home() {
             friction={1}>
             <ListItem
               title={item.name.toString()}
-              link={`lists/${item.id}`}
+              link={`tasks/${item.id}`}
               bgColor="bg-violet-500"
             />
           </ReanimatedSwipeable>

@@ -17,12 +17,11 @@ export default function Layout() {
       <GestureHandlerRootView>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="lists/[id]/index" options={{ headerShown: false }} />
-          <Stack.Screen name="lists/[id]/add-task" options={{ headerShown: false }} />
-          <Stack.Screen name="lists/[id]/edit-task" options={{ headerShown: false }} />
-          <Stack.Screen name="tasks/index" options={{ headerShown: false }} />
-          <Stack.Screen name="tasks/[id]" options={{ headerShown: false }} />
-          <Stack.Screen name="add-list" options={{ headerShown: false }} />
+          <Stack.Screen name="tasks/[id]/index" options={{ headerShown: false }} />
+          <Stack.Screen name="tasks/[id]/add-task" options={{ headerShown: false }} />
+          <Stack.Screen name="tasks/[id]/edit-task" options={{ headerShown: false }} />
+          <Stack.Screen name="lists/[id]/edit-list" options={{ headerShown: false }} />
+          <Stack.Screen name="lists/add-list" options={{ headerShown: false }} />
         </Stack>
       </GestureHandlerRootView>
     </DatabaseProvider>

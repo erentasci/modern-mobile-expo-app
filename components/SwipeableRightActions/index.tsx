@@ -50,10 +50,10 @@ const SwipeableRightAction = ({ id, list, task }: SwipeableRightActionsProps) =>
 
   const handleEdit = () => {
     if (task) {
-      router.push(`/lists/${id}/edit-task`);
+      router.push(`/tasks/${id}/edit-task`);
     }
     if (list) {
-      console.log('Edit list functionality is not implemented yet');
+      router.push(`/lists/${id}/edit-list`);
     }
   };
 
