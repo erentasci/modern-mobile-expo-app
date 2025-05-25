@@ -28,6 +28,8 @@ const TaskItem = ({
   priority,
   dueDate,
 }: TaskItemProps & { status: StatusKey; priority: PriorityKey }) => {
+  console.log('Due Date:', dueDate);
+
   return (
     <View className={styles.container}>
       <Image source={{ uri: image }} className={styles.image} resizeMode="cover" alt="Task Image" />
@@ -50,13 +52,7 @@ const TaskItem = ({
               {priority.charAt(0).toUpperCase() + priority.slice(1)}
             </Text>
           </View>
-          <Text className={styles.due_date}>
-            {new Date(dueDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-            })}
-          </Text>
+          <Text className={styles.due_date}>{dueDate}</Text>
         </View>
       </View>
     </View>

@@ -1,4 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useRouter } from 'expo-router';
 import { TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles';
@@ -8,6 +9,8 @@ import { useListStore } from '@/store/listStore';
 import { useTaskStore } from '@/store/taskStore';
 
 const SwipeableRightAction = ({ id, list, task }: SwipeableRightActionsProps) => {
+  const router = useRouter();
+
   const { deleteListById } = useListStore();
   const { deleteTaskById } = useTaskStore();
 
@@ -45,12 +48,21 @@ const SwipeableRightAction = ({ id, list, task }: SwipeableRightActionsProps) =>
     }
   };
 
+  const handleEdit = () => {
+    if (task) {
+      router.push(`/lists/${id}/edit-task`);
+    }
+    if (list) {
+      console.log('Edit list functionality is not implemented yet');
+    }
+  };
+
   return (
     <View className={styles.container}>
       <TouchableOpacity onPress={handleDelete} className={styles.actionButton}>
         <Ionicons name="trash-outline" size={24} color="red" />
       </TouchableOpacity>
-      <TouchableOpacity className={styles.actionButton}>
+      <TouchableOpacity onPress={handleEdit} className={styles.actionButton}>
         <Ionicons name="pencil-outline" size={24} color="blue" />
       </TouchableOpacity>
     </View>

@@ -19,6 +19,7 @@ export default function Layout() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="lists/[id]/index" options={{ headerShown: false }} />
           <Stack.Screen name="lists/[id]/add-task" options={{ headerShown: false }} />
+          <Stack.Screen name="lists/[id]/edit-task" options={{ headerShown: false }} />
           <Stack.Screen name="tasks/index" options={{ headerShown: false }} />
           <Stack.Screen name="tasks/[id]" options={{ headerShown: false }} />
           <Stack.Screen name="add-list" options={{ headerShown: false }} />

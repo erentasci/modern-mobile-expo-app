@@ -1,7 +1,7 @@
 export const styles = {
   container:
     'flex w-full flex-row items-center gap-2 rounded border border-neutral-300 bg-neutral-200 px-4 py-2',
-  image: 'h-24 w-24 rounded-full',
+  image: 'h-24 w-24 rounded-full border border-neutral-400 object-cover',
   infoContainer: 'flex flex-1 flex-col gap-2 p-2',
   title: 'text-lg font-bold text-neutral-800',
   description: 'text-sm text-neutral-500',

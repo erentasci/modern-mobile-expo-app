@@ -83,25 +83,6 @@ const Page = () => {
         keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
       />
-      {/* <ScrollView showsVerticalScrollIndicator={false}>
-        {tasks.length > 0 ? (
-          tasks.map((task) => (
-            <View key={task.id} className="border-b border-gray-200 p-4">
-              <Text>{task.name}</Text>
-              <Text className="text-sm text-gray-500">{task.description}</Text>
-              <Text>Status: {task.is_completed === true ? 'Completed' : 'Not Completed'}</Text>
-              <Text>Priority: {task.priority?.toLocaleUpperCase()}</Text>
-              <Text>Due Date: {task.due_date ?? 'No due date'}</Text>
-              <Text>Created At: {new Date(task.created_at).toLocaleDateString()}</Text>
-              <Text>Updated At: {new Date(task.updated_at).toLocaleDateString()}</Text>
-            </View>
-          ))
-        ) : (
-          <View className="p-4">
-            <Text>No tasks available</Text>
-          </View>
-        )}
-      </ScrollView> */}
     </Container>
   );
 };
