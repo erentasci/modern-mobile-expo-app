@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { createTask, getTasksByListId } from '@/queries/tasks';
+import { createTask, deleteTask, getTasksByListId } from '@/queries/tasks';
 import { Task } from '@/types';
 
 export interface TaskState {
@@ -11,6 +11,7 @@ export interface TaskState {
     id: number
   ) => Promise<{ success: boolean; message?: string }>;
   fetchTasksByListId: (id: number) => Promise<{ success: boolean; message?: string }>;
+  deleteTaskById: (id: number) => Promise<{ success: boolean; message?: string }>;
 }
 
 export const useTaskStore = create<TaskState>((set) => ({
@@ -69,6 +70,21 @@ export const useTaskStore = create<TaskState>((set) => ({
         success: false,
         message: 'An unexpected error occurred while fetching tasks by list Id',
       };
+    }
+  },
+  deleteTaskById: async (id: number) => {
+    try {
+      const response = await deleteTask(id);
+      if (response.changes > 0) {
+        set((state) => ({
+          tasks: state.tasks.filter((task) => task.id !== id),
+        }));
+        return { success: true, message: 'List deleted successfully' };
+      } else {
+        return { success: false, message: 'Failed to delete the list' };
+      }
+    } catch {
+      return { success: false, message: 'An unexpected error occurred while deleting the list ' };
     }
   },
 }));

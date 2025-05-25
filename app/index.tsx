@@ -44,7 +44,7 @@ export default function Home() {
         renderItem={({ item }: { item: List; index: number }) => (
           <ReanimatedSwipeable
             ref={reanimatedRef}
-            renderRightActions={() => <SwipeableRightAction id={item.id} />}
+            renderRightActions={() => <SwipeableRightAction id={item.id} list />}
             rightThreshold={100}
             friction={1}>
             <ListItem

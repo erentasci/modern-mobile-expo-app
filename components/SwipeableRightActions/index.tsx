@@ -2,26 +2,46 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { TouchableOpacity, View } from 'react-native';
 
 import { styles } from './styles';
+import { SwipeableRightActionsProps } from './types';
 
 import { useListStore } from '@/store/listStore';
+import { useTaskStore } from '@/store/taskStore';
 
-const SwipeableRightAction = ({ id }: { id: number }) => {
+const SwipeableRightAction = ({ id, list, task }: SwipeableRightActionsProps) => {
   const { deleteListById } = useListStore();
+  const { deleteTaskById } = useTaskStore();
 
   const handleDelete = async () => {
-    if (!id) {
-      console.error('ID is required to delete a list');
-      return null;
-    }
-    try {
-      const response = await deleteListById(id);
-      if (response?.success) {
-        console.log('List deleted successfully:', response.message);
-      } else {
-        console.error('Failed to delete list:', response?.message);
+    if (list) {
+      if (!id) {
+        console.error('ID is required to delete a list');
+        return null;
       }
-    } catch (error) {
-      console.error('An unexpected error occurred while deleting the list:', error);
+      try {
+        const response = await deleteListById(id);
+        if (response?.success) {
+          console.log('List deleted successfully:', response.message);
+        } else {
+          console.error('Failed to delete list:', response?.message);
+        }
+      } catch (error) {
+        console.error('An unexpected error occurred while deleting the list:', error);
+      }
+    } else if (task) {
+      if (!id) {
+        console.error('ID is required to delete a list');
+        return null;
+      }
+      try {
+        const response = await deleteTaskById(id);
+        if (response?.success) {
+          console.log('List deleted successfully:', response.message);
+        } else {
+          console.error('Failed to delete list:', response?.message);
+        }
+      } catch (error) {
+        console.error('An unexpected error occurred while deleting the list:', error);
+      }
     }
   };
 
