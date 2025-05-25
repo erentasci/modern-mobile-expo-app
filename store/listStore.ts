@@ -11,7 +11,7 @@ export interface ListState {
     message?: string;
   }>;
   createNewList: (name: string) => Promise<{ success: boolean; message?: string }>;
-  getListById: (id: number) => Promise<List | undefined>;
+  getList: (id: number) => Promise<List | undefined>;
   deleteListById: (id: number) => Promise<{ success: boolean; message?: string }>;
 }
 export const useListStore = create<ListState>((set) => ({
@@ -27,8 +27,7 @@ export const useListStore = create<ListState>((set) => ({
         console.error('Failed to fetch lists');
         return { success: false, message: 'Failed to fetch lists' };
       }
-    } catch (error) {
-      console.error('Error fetching lists:', error);
+    } catch {
       return { success: false, message: 'An unexpected error occurred while fetching lists' };
     }
   },
@@ -48,18 +47,14 @@ export const useListStore = create<ListState>((set) => ({
       } else {
         return { success: false, message: 'Failed to create a new list' };
       }
-    } catch (error) {
-      console.error('Error creating new a list:', error);
+    } catch {
       return { success: false, message: 'An unexpected error occurred while creating a new list' };
     }
   },
-  getListById: async (id: number) => {
+  getList: async (id: number) => {
     try {
       const response = await getListById(id);
-      if (response) {
-        console.log('List fetched successfully:', response);
-        return response;
-      }
+      return response;
     } catch (error) {
       console.error('Error fetching list by ID:', error);
     }
@@ -75,9 +70,8 @@ export const useListStore = create<ListState>((set) => ({
       } else {
         return { success: false, message: 'Failed to delete the list' };
       }
-    } catch (error) {
-      console.error('Error deleting list by ID:', error);
-      return { success: false, message: 'An unexpected error occurred while deleting the list' };
+    } catch {
+      return { success: false, message: 'An unexpected error occurred while deleting the list ' };
     }
   },
 }));

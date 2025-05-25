@@ -12,14 +12,14 @@ import { List } from '@/types';
 const Page = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
-  const { getListById } = useListStore();
+  const { getList } = useListStore();
   const { fetchTasksByListId, tasks, setTasks } = useTaskStore();
   const [currentList, setCurrentList] = useState<List>();
 
   useEffect(() => {
     const fetchCurrentList = async () => {
       if (id) {
-        const list = await getListById(Number(id));
+        const list = await getList(Number(id));
         if (list) {
           setCurrentList(list);
         } else {

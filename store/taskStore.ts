@@ -44,8 +44,7 @@ export const useTaskStore = create<TaskState>((set) => ({
           message: 'Failed to create task',
         };
       }
-    } catch (error) {
-      console.error('Error creating new task:', error);
+    } catch {
       return {
         success: false,
         message: 'An unexpected error occurred while creating a new task',
@@ -60,11 +59,13 @@ export const useTaskStore = create<TaskState>((set) => ({
         return { success: true, message: 'Tasks fetched successfully' };
       } else {
         console.error('Failed to fetch tasks');
-        return { success: false, message: 'Failed to fetch tasks' };
+        return { success: false, message: 'Failed to fetch tasks by list Id' };
       }
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-      return { success: false, message: 'An unexpected error occurred while fetching tasks' };
+    } catch {
+      return {
+        success: false,
+        message: 'An unexpected error occurred while fetching tasks by list Id',
+      };
     }
   },
 }));
