@@ -35,12 +35,12 @@ const SwipeableRightAction = ({ id, list, task }: SwipeableRightActionsProps) =>
       try {
         const response = await deleteTaskById(id);
         if (response?.success) {
-          console.log('List deleted successfully:', response.message);
+          console.log('Task deleted successfully:', response.message);
         } else {
-          console.error('Failed to delete list:', response?.message);
+          console.error('Failed to task list:', response?.message);
         }
       } catch (error) {
-        console.error('An unexpected error occurred while deleting the list:', error);
+        console.error('An unexpected error occurred while deleting the task:', error);
       }
     }
   };
