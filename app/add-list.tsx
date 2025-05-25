@@ -16,6 +16,7 @@ const Page = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ListFormData>({
     resolver: zodResolver(listSchema),
   });
@@ -25,6 +26,7 @@ const Page = () => {
       const response = await createNewList(FormData.name);
       if (response?.success) {
         Alert.alert('Success', response.message);
+        reset();
         fetchLists();
       } else {
         Alert.alert('Error', response?.message);

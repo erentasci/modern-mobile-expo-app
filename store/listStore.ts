@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { createList, getAllLists, getListById } from '@/queries/lists';
+import { createList, deleteList, getAllLists, getListById } from '@/queries/lists';
 import { List } from '@/types';
 
 export interface ListState {
@@ -12,6 +12,7 @@ export interface ListState {
   }>;
   createNewList: (name: string) => Promise<{ success: boolean; message?: string }>;
   getListById: (id: number) => Promise<List | undefined>;
+  deleteListById: (id: number) => Promise<{ success: boolean; message?: string }>;
 }
 export const useListStore = create<ListState>((set) => ({
   lists: [],
@@ -34,7 +35,7 @@ export const useListStore = create<ListState>((set) => ({
   createNewList: async (name: string) => {
     try {
       const response = await createList(name);
-      if (response.changes) {
+      if (response.changes > 0) {
         const currentTime = new Date().toISOString();
         const newList: List = {
           id: response.lastInsertRowId,
@@ -61,6 +62,22 @@ export const useListStore = create<ListState>((set) => ({
       }
     } catch (error) {
       console.error('Error fetching list by ID:', error);
+    }
+  },
+  deleteListById: async (id: number) => {
+    try {
+      const response = await deleteList(id);
+      if (response.changes > 0) {
+        set((state) => ({
+          lists: state.lists.filter((list) => list.id !== id),
+        }));
+        return { success: true, message: 'List deleted successfully' };
+      } else {
+        return { success: false, message: 'Failed to delete the list' };
+      }
+    } catch (error) {
+      console.error('Error deleting list by ID:', error);
+      return { success: false, message: 'An unexpected error occurred while deleting the list' };
     }
   },
 }));

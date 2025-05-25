@@ -25,7 +25,7 @@ export const useTaskStore = create<TaskState>((set) => ({
         due_date: task.due_date ?? undefined,
         list_id: id,
       });
-      if (response.changes) {
+      if (response.changes > 0) {
         const currentTime = new Date().toISOString();
         const newTask: Task = {
           ...task,
