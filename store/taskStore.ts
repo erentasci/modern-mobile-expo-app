@@ -6,14 +6,17 @@ import { Task } from '@/types';
 export interface TaskState {
   tasks: Task[];
   setTasks: (newTasks: Task[]) => void;
-  createNewTaskById: (task: Task, id: number) => Promise<{ success: boolean; message?: string }>;
+  createNewTaskById: (
+    task: Omit<Task, 'id'>,
+    id: number
+  ) => Promise<{ success: boolean; message?: string }>;
   fetchTasksByListId: (id: number) => Promise<{ success: boolean; message?: string }>;
 }
 
 export const useTaskStore = create<TaskState>((set) => ({
   tasks: [],
   setTasks: (newTasks: Task[]) => set({ tasks: newTasks }),
-  createNewTaskById: async (task: Task, id: number) => {
+  createNewTaskById: async (task: Omit<Task, 'id'>, id: number) => {
     try {
       const response = await createTask({
         name: task.name,

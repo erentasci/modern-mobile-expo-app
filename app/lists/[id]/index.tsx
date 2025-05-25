@@ -43,7 +43,7 @@ const Page = () => {
         buttonBgColor="bg-bleue-500"
         buttonIcon="add"
       />
-
+      {/* DÜZENLENECEK */}
       <FlatList
         data={tasks}
         contentContainerClassName="gap-4 mt-2"
@@ -69,7 +69,7 @@ const Page = () => {
             dueDate={item.due_date ?? new Date().toISOString()}
           />
         )}
-        keyExtractor={(item) => item.toString()}
+        keyExtractor={(item) => item.id.toString()}
         showsVerticalScrollIndicator={false}
       />
       {/* <ScrollView showsVerticalScrollIndicator={false}>

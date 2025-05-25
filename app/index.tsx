@@ -41,7 +41,7 @@ export default function Home() {
       <FlatList
         data={lists}
         contentContainerClassName="gap-4 mt-4"
-        renderItem={({ item, index }: { item: List; index: number }) => (
+        renderItem={({ item }: { item: List; index: number }) => (
           <ReanimatedSwipeable
             ref={reanimatedRef}
             renderRightActions={() => <SwipeableRightAction id={item.id} />}

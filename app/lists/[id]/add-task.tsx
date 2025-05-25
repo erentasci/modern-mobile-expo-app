@@ -27,7 +27,6 @@ const Page = () => {
   const onSubmit = async (formData: TaskFormData) => {
     try {
       const newTask = {
-        id: Date.now(),
         name: formData.name,
         description: formData.description ?? null,
         image: formData.image ?? null,

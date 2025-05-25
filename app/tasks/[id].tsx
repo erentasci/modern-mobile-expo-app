@@ -1,4 +1,4 @@
-import { Container } from '@/components/Container';
+import Container from '@/components/Container';
 import Title from '@/components/Title';
 
 const Page = () => {
