@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { createList, deleteList, getAllLists, getListById } from '@/queries/lists';
+import { createList, deleteList, getAllLists, getListById, updateList } from '@/queries/lists';
 import { List } from '@/types';
 
 export interface ListState {
@@ -13,6 +13,7 @@ export interface ListState {
   createNewList: (name: string) => Promise<{ success: boolean; message?: string }>;
   getList: (id: number) => Promise<List | undefined>;
   deleteListById: (id: number) => Promise<{ success: boolean; message?: string }>;
+  updateListById: (id: number, name: string) => Promise<{ success: boolean; message?: string }>;
 }
 export const useListStore = create<ListState>((set) => ({
   lists: [],
@@ -72,6 +73,24 @@ export const useListStore = create<ListState>((set) => ({
       }
     } catch {
       return { success: false, message: 'An unexpected error occurred while deleting the list ' };
+    }
+  },
+  updateListById: async (id: number, name: string) => {
+    try {
+      const response = await updateList(id, name);
+      if (response.changes > 0) {
+        const currentTime = new Date().toISOString();
+        set((state) => ({
+          lists: state.lists.map((list) =>
+            list.id === id ? { ...list, name, updated_at: currentTime } : list
+          ),
+        }));
+        return { success: true, message: 'List updated successfully' };
+      } else {
+        return { success: false, message: 'Failed to update the list' };
+      }
+    } catch {
+      return { success: false, message: 'An unexpected error occurred while updating the list' };
     }
   },
 }));

@@ -37,8 +37,6 @@ const Page = () => {
     }
   };
 
-  console.log('Form Errors:', errors.name?.message);
-
   return (
     <Container>
       <Title title="Add List" onBackPress />
