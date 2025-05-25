@@ -8,6 +8,7 @@ import { SearchFilterProps } from './types';
 const SearchFilter = ({
   onChangeText,
   onFilterPress,
+  hasFilter,
   placeHolderText,
   placeholderTextColor,
 }: SearchFilterProps) => {
@@ -18,7 +19,9 @@ const SearchFilter = ({
         placeholderTextColor={placeholderTextColor}
         onChangeText={onChangeText}
       />
-      <Icon iconName="filter" iconSize={24} iconColor="black" onPress={onFilterPress} />
+      {hasFilter && onFilterPress && (
+        <Icon iconName="filter" iconSize={24} iconColor="black" onPress={onFilterPress} />
+      )}
     </View>
   );
 };

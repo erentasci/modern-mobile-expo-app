@@ -36,7 +36,7 @@ export default function Home() {
         placeHolderText="Search Lists"
         placeholderTextColor="text-neutral-400"
         onChangeText={() => console.log('Search')}
-        onFilterPress={() => console.log('Filter')}
+        hasFilter={false}
       />
       <FlatList
         data={lists}

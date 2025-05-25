@@ -6,6 +6,7 @@ import ReanimatedSwipeable, {
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
 
 import Container from '@/components/Container';
+import SearchFilter from '@/components/SearchFilter';
 import SwipeableRightAction from '@/components/SwipeableRightActions';
 import TaskItem from '@/components/TaskItem';
 import Title from '@/components/Title';
@@ -47,6 +48,13 @@ const Page = () => {
         buttonColor="white"
         buttonBgColor="bg-bleue-500"
         buttonIcon="add"
+      />
+      <SearchFilter
+        placeHolderText="Search Tasks"
+        placeholderTextColor="text-neutral-400"
+        onChangeText={() => console.log('Search')}
+        hasFilter
+        onFilterPress={() => console.log('Filter Pressed')}
       />
       <FlatList
         data={tasks}
