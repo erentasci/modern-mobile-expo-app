@@ -6,6 +6,7 @@ import { styles } from './styles';
 import { SearchFilterProps } from './types';
 
 const SearchFilter = ({
+  value,
   onChangeText,
   onFilterPress,
   hasFilter,
@@ -18,6 +19,7 @@ const SearchFilter = ({
         placeHolderText={placeHolderText}
         placeholderTextColor={placeholderTextColor}
         onChangeText={onChangeText}
+        value={value}
       />
       {hasFilter && onFilterPress && (
         <Icon iconName="filter" iconSize={24} iconColor="black" onPress={onFilterPress} />

@@ -1,6 +1,13 @@
 import { create } from 'zustand';
 
-import { createTask, deleteTask, getTaskById, getTasksByListId, updateTask } from '@/queries/tasks';
+import {
+  createTask,
+  deleteTask,
+  getTaskById,
+  getTasksByListId,
+  searchTasksByNameById,
+  updateTask,
+} from '@/queries/tasks';
 import { Task } from '@/types';
 
 export interface TaskState {
@@ -17,6 +24,7 @@ export interface TaskState {
     task: Omit<Task, 'id'>
   ) => Promise<{ success: boolean; message?: string }>;
   getTaskById: (id: number) => Promise<Task | null>;
+  getTaskByTerm: (searchTerm: string, id: number) => Promise<Task[] | undefined>;
 }
 
 export const useTaskStore = create<TaskState>((set) => ({
@@ -133,6 +141,23 @@ export const useTaskStore = create<TaskState>((set) => ({
     } catch (error) {
       console.error('An unexpected error occurred while fetching the task by ID:', error);
       return null;
+    }
+  },
+  getTaskByTerm: async (searchTerm: string, id: number) => {
+    try {
+      const response = await searchTasksByNameById(searchTerm, id);
+      if (response) {
+        const filteredTasks = response.filter((task) =>
+          task.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        set({ tasks: filteredTasks });
+      } else {
+        console.error('Failed to fetch lists');
+        return undefined;
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred while searching for lists:', error);
+      return undefined;
     }
   },
 }));

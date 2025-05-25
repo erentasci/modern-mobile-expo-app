@@ -18,8 +18,9 @@ const Page = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const { getList } = useListStore();
-  const { fetchTasksByListId, tasks, setTasks } = useTaskStore();
+  const { fetchTasksByListId, tasks, setTasks, getTaskByTerm } = useTaskStore();
   const [currentList, setCurrentList] = useState<List>();
+  const [searchText, setSearchText] = useState<string>('');
   const reanimatedRef = useRef<SwipeableMethods>(null);
 
   useEffect(() => {
@@ -39,6 +40,14 @@ const Page = () => {
     fetchCurrentList();
   }, [id]);
 
+  useEffect(() => {
+    if (searchText.trim() !== '') {
+      getTaskByTerm(searchText, Number(id));
+    } else {
+      fetchTasksByListId(Number(id));
+    }
+  }, [searchText]);
+
   return (
     <Container>
       <Title
@@ -52,9 +61,12 @@ const Page = () => {
       <SearchFilter
         placeHolderText="Search Tasks"
         placeholderTextColor="text-neutral-400"
-        onChangeText={() => console.log('Search')}
-        hasFilter
+        value={searchText}
+        onChangeText={(text) => {
+          setSearchText(text);
+        }}
         onFilterPress={() => console.log('Filter Pressed')}
+        hasFilter
       />
       <FlatList
         data={tasks}

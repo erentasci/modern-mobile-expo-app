@@ -1,8 +1,8 @@
-import { eq, like, desc, and, gt } from 'drizzle-orm';
+import { and, desc, eq, gt, like } from 'drizzle-orm';
 
 import { db } from '../db';
-import { simulateNetworkLatency } from './utils';
 import { tasks } from '../db/schema';
+import { simulateNetworkLatency } from './utils';
 
 /**
  * Retrieves all tasks from the database
@@ -252,6 +252,15 @@ export const searchTasksByName = async (searchTerm: string) => {
     .select()
     .from(tasks)
     .where(like(tasks.name, `%${searchTerm}%`))
+    .all();
+};
+
+export const searchTasksByNameById = async (searchTerm: string, id: number) => {
+  await simulateNetworkLatency();
+  return db
+    .select()
+    .from(tasks)
+    .where(and(like(tasks.name, `%${searchTerm}%`), eq(tasks.list_id, id)))
     .all();
 };
 

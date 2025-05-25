@@ -1,6 +1,13 @@
 import { create } from 'zustand';
 
-import { createList, deleteList, getAllLists, getListById, updateList } from '@/queries/lists';
+import {
+  createList,
+  deleteList,
+  getAllLists,
+  getListById,
+  searchListsByName,
+  updateList,
+} from '@/queries/lists';
 import { List } from '@/types';
 
 export interface ListState {
@@ -14,6 +21,7 @@ export interface ListState {
   getList: (id: number) => Promise<List | undefined>;
   deleteListById: (id: number) => Promise<{ success: boolean; message?: string }>;
   updateListById: (id: number, name: string) => Promise<{ success: boolean; message?: string }>;
+  getListByTerm: (searchTerm: string) => Promise<List[] | undefined>;
 }
 export const useListStore = create<ListState>((set) => ({
   lists: [],
@@ -91,6 +99,23 @@ export const useListStore = create<ListState>((set) => ({
       }
     } catch {
       return { success: false, message: 'An unexpected error occurred while updating the list' };
+    }
+  },
+  getListByTerm: async (searchTerm: string) => {
+    try {
+      const response = await searchListsByName(searchTerm);
+      if (response) {
+        const filteredLists = response.filter((list) =>
+          list.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        set({ lists: filteredLists });
+      } else {
+        console.error('Failed to fetch lists');
+        return undefined;
+      }
+    } catch (error) {
+      console.error('An unexpected error occurred while searching for lists:', error);
+      return undefined;
     }
   },
 }));

@@ -1,5 +1,5 @@
 import { Stack, useRouter } from 'expo-router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlatList } from 'react-native';
 import ReanimatedSwipeable, {
   SwipeableMethods,
@@ -15,12 +15,21 @@ import { List } from '@/types';
 
 export default function Home() {
   const router = useRouter();
-  const { lists, fetchLists } = useListStore();
+  const { lists, fetchLists, getListByTerm } = useListStore();
+  const [searchText, setSearchText] = useState<string>('');
   const reanimatedRef = useRef<SwipeableMethods>(null);
 
   useEffect(() => {
     fetchLists();
   }, []);
+
+  useEffect(() => {
+    if (searchText.trim() !== '') {
+      getListByTerm(searchText);
+    } else {
+      fetchLists();
+    }
+  }, [searchText]);
 
   return (
     <Container>
@@ -35,7 +44,10 @@ export default function Home() {
       <SearchFilter
         placeHolderText="Search Lists"
         placeholderTextColor="text-neutral-400"
-        onChangeText={() => console.log('Search')}
+        value={searchText}
+        onChangeText={(text) => {
+          setSearchText(text);
+        }}
         hasFilter={false}
       />
       <FlatList

@@ -1,7 +1,8 @@
 export type SearchFilterInput = {
+  value: string;
   placeHolderText: string;
   placeholderTextColor: string;
-  onChangeText: () => void;
+  onChangeText: (text: string) => void;
 };
 
 type WithFilter = {
