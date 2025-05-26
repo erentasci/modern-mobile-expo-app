@@ -1,8 +1,8 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 const SkeletonTaskItem = () => {
   return (
-    <View className="mt-4 flex flex-col gap-4">
+    <ScrollView contentContainerClassName="mt-4 flex flex-col gap-4">
       {Array.from({ length: 4 }).map((_, index) => (
         <View
           key={index}
@@ -24,7 +24,7 @@ const SkeletonTaskItem = () => {
           </View>
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 

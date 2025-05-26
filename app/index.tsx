@@ -16,7 +16,7 @@ import { List } from '@/types';
 
 export default function Home() {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { lists, fetchLists, getListByTerm } = useListStore();
   const [searchText, setSearchText] = useState<string>('');
   const reanimatedRef = useRef<SwipeableMethods>(null);

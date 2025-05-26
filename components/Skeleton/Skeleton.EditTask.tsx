@@ -1,8 +1,8 @@
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 const SkeletonEditTask = () => {
   return (
-    <View className="flex flex-col gap-3">
+    <ScrollView contentContainerClassName="flex flex-col gap-3">
       {Array.from({ length: 7 }).map((_, index) => (
         <View key={index} className="flex animate-pulse flex-col gap-5">
           <View className="h-12">
@@ -11,7 +11,7 @@ const SkeletonEditTask = () => {
         </View>
       ))}
       <View className="h-12 rounded-md bg-neutral-400" />
-    </View>
+    </ScrollView>
   );
 };
 
