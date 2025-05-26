@@ -8,6 +8,7 @@ import { Button } from '@/components/Button';
 import Container from '@/components/Container';
 import ErrorText from '@/components/ErrorText';
 import Input from '@/components/Input';
+import SkeletonEditTask from '@/components/Skeleton/Skeleton.EditTask';
 import Title from '@/components/Title';
 import { TaskFormData, taskSchema } from '@/lib/validators/taskSchema';
 import { updateTask } from '@/queries/tasks';
@@ -15,6 +16,7 @@ import { useTaskStore } from '@/store/taskStore';
 
 const Page = () => {
   const { id } = useLocalSearchParams();
+  const [loading, setLoading] = useState<boolean>(false);
   const { getTaskById, fetchTasksByListId } = useTaskStore();
   const {
     control,
@@ -56,6 +58,14 @@ const Page = () => {
     fetchCurrentTask();
   }, [id]);
 
+  useEffect(() => {
+    if (currentListId) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [currentListId]);
+
   const onSubmit = async (FormData: TaskFormData) => {
     try {
       const response = await updateTask(Number(id), {
@@ -82,132 +92,136 @@ const Page = () => {
   return (
     <Container>
       <Title title="Edit Task" onBackPress />
-      <ScrollView contentContainerClassName="flex flex-col gap-3 pb-6">
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Name"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="name"
-          rules={{ required: true }}
-        />
-        {errors.name && <ErrorText message={errors.name.message} />}
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Description"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="description"
-          rules={{ required: true }}
-        />
-        {errors.description && <ErrorText message={errors.description.message} />}
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Image"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="image"
-          rules={{ required: true }}
-        />
-        {errors.image && <ErrorText message={errors.image.message} />}
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Status"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="status"
-          rules={{ required: true }}
-        />
-        {errors.status && <ErrorText message={errors.status.message} />}
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Priority"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="priority"
-          rules={{ required: true }}
-        />
-        {errors.priority && <ErrorText message={errors.priority.message} />}
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Is Completed"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="is_completed"
-          rules={{ required: true }}
-        />
-        {errors.is_completed && <ErrorText message={errors.is_completed.message} />}
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Due Date"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="due_date"
-          rules={{ required: true }}
-        />
-        {errors.due_date && <ErrorText message={errors.due_date.message} />}
-        <Button
-          className="rounded-md bg-green-500 shadow-sm"
-          title="Edit Task"
-          onPress={handleSubmit(onSubmit)}
-        />
-      </ScrollView>
+      {loading ? (
+        <SkeletonEditTask />
+      ) : (
+        <ScrollView contentContainerClassName="flex flex-col gap-3 pb-6">
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Name"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="name"
+            rules={{ required: true }}
+          />
+          {errors.name && <ErrorText message={errors.name.message} />}
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Description"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="description"
+            rules={{ required: true }}
+          />
+          {errors.description && <ErrorText message={errors.description.message} />}
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Image"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="image"
+            rules={{ required: true }}
+          />
+          {errors.image && <ErrorText message={errors.image.message} />}
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Status"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="status"
+            rules={{ required: true }}
+          />
+          {errors.status && <ErrorText message={errors.status.message} />}
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Priority"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="priority"
+            rules={{ required: true }}
+          />
+          {errors.priority && <ErrorText message={errors.priority.message} />}
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Is Completed"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="is_completed"
+            rules={{ required: true }}
+          />
+          {errors.is_completed && <ErrorText message={errors.is_completed.message} />}
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Due Date"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="due_date"
+            rules={{ required: true }}
+          />
+          {errors.due_date && <ErrorText message={errors.due_date.message} />}
+          <Button
+            className="rounded-md bg-green-500 shadow-sm"
+            title="Edit Task"
+            onPress={handleSubmit(onSubmit)}
+          />
+        </ScrollView>
+      )}
     </Container>
   );
 };

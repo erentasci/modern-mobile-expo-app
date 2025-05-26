@@ -8,6 +8,7 @@ import { Button } from '@/components/Button';
 import Container from '@/components/Container';
 import ErrorText from '@/components/ErrorText';
 import Input from '@/components/Input';
+import SkeletonEditList from '@/components/Skeleton/Skeleton.EditList';
 import Title from '@/components/Title';
 import { ListFormData, listSchema } from '@/lib/validators/listSchema';
 import { useListStore } from '@/store/listStore';
@@ -17,6 +18,8 @@ const Page = () => {
   const { id } = useLocalSearchParams();
   const { getList, updateListById, fetchLists } = useListStore();
   const [currentList, setCurrentList] = useState<List>();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const {
     control,
     handleSubmit,
@@ -44,6 +47,14 @@ const Page = () => {
     fetchCurrentList();
   }, [id]);
 
+  useEffect(() => {
+    if (currentList) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [currentList]);
+
   const onSubmit = async (FormData: ListFormData) => {
     try {
       const response = await updateListById(Number(id), FormData.name);
@@ -62,31 +73,35 @@ const Page = () => {
   return (
     <Container>
       <Title title="Edit List" onBackPress />
-      <View className="flex flex-col gap-5">
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View className="h-12">
-              <Input
-                placeHolderText="Enter List Name"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-                defaultValue={currentList?.name}
-                placeholderTextColor="text-neutral-500"
-              />
-            </View>
-          )}
-          name="name"
-          rules={{ required: true }}
-        />
-        {errors.name && <ErrorText message={errors.name.message} />}
-        <Button
-          className="rounded-md bg-green-500 shadow-sm"
-          title="Edit List"
-          onPress={handleSubmit(onSubmit)}
-        />
-      </View>
+      {loading ? (
+        <SkeletonEditList />
+      ) : (
+        <View className="flex flex-col gap-5">
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <View className="h-12">
+                <Input
+                  placeHolderText="Enter List Name"
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  defaultValue={currentList?.name}
+                  placeholderTextColor="text-neutral-500"
+                />
+              </View>
+            )}
+            name="name"
+            rules={{ required: true }}
+          />
+          {errors.name && <ErrorText message={errors.name.message} />}
+          <Button
+            className="rounded-md bg-green-500 shadow-sm"
+            title="Edit List"
+            onPress={handleSubmit(onSubmit)}
+          />
+        </View>
+      )}
     </Container>
   );
 };

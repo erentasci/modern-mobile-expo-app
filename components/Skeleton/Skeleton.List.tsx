@@ -6,7 +6,7 @@ const SkeletonList = () => {
       {Array.from({ length: 5 }).map((_, index) => (
         <View
           key={index}
-          className=" flex animate-pulse flex-row items-center justify-between rounded-md bg-neutral-300 px-5 py-6 text-white">
+          className="flex animate-pulse flex-row items-center justify-between rounded-md bg-neutral-300 px-5 py-6 text-white">
           <View className="flex-1 gap-1">
             <View className="h-6 w-3/5 rounded bg-white bg-opacity-10" />
           </View>
