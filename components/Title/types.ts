@@ -18,4 +18,5 @@ type WithoutButton = {
 
 export type TitleProps = {
   title: string;
+  fontStyle?: string;
 } & (WithButton | WithoutButton);

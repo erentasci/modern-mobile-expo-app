@@ -26,7 +26,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (lists.length > 0) {
+    if (lists) {
       setLoading(false);
     } else {
       setLoading(true);
@@ -81,6 +81,9 @@ export default function Home() {
           )}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <Title title="No Lists Found" fontStyle="text-xl text-gray-400 underline mx-auto" />
+          }
         />
       )}
     </Container>

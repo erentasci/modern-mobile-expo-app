@@ -44,7 +44,7 @@ const Page = () => {
   }, [id]);
 
   useEffect(() => {
-    if (tasks.length > 0 && currentList) {
+    if (tasks && currentList) {
       setLoading(false);
     } else {
       setLoading(true);
@@ -120,6 +120,9 @@ const Page = () => {
           )}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <Title title="No Tasks Found" fontStyle="text-xl text-gray-400 underline mx-auto" />
+          }
         />
       )}
     </Container>

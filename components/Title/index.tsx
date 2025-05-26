@@ -12,6 +12,7 @@ const Title = ({
   buttonColor,
   buttonBgColor,
   buttonIcon,
+  fontStyle,
 }: TitleProps) => {
   const router = useRouter();
 
@@ -23,10 +24,10 @@ const Title = ({
             <Ionicons name="arrow-back" size={20} color="#000000" />
           </TouchableOpacity>
 
-          <Text className={styles.text}>{title}</Text>
+          <Text className={[styles.text, fontStyle].join(' ')}>{title}</Text>
         </View>
       ) : (
-        <Text className={styles.text}>{title}</Text>
+        <Text className={[styles.text, fontStyle].join(' ')}>{title}</Text>
       )}
       {onPress && (
         <TouchableOpacity onPress={onPress} className={styles.button + ` ${buttonBgColor}`}>

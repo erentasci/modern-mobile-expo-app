@@ -6,7 +6,7 @@ import { Image, Text, View } from 'react-native';
 import { styles } from './styles';
 import { TaskItemProps } from './types';
 
-import { PRIORITY_COLOR, STATUS_COLOR } from '@/lib/contants';
+import { formatStatus, PRIORITY_COLOR, STATUS_COLOR } from '@/lib/contants';
 
 type StatusKey = keyof typeof STATUS_COLOR;
 type PriorityKey = keyof typeof PRIORITY_COLOR;
@@ -21,6 +21,8 @@ const TaskItem = ({
   dueDate,
 }: TaskItemProps & { status: StatusKey; priority: PriorityKey }) => {
   const [error, setError] = useState(false);
+  console.log('ITEM:', status, priority, isCompleted);
+
   return (
     <View className={styles.container}>
       {!error && image ? (
@@ -57,10 +59,10 @@ const TaskItem = ({
         <View className={styles.sub_info_container}>
           <View className={styles.sub_texts}>
             <Text className={[styles.status, STATUS_COLOR[status]].join(' ')}>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {formatStatus(status)}
             </Text>
             <Text className={[styles.priority, PRIORITY_COLOR[priority]].join(' ')}>
-              {priority.charAt(0).toUpperCase() + priority.slice(1)}
+              {formatStatus(priority)}
             </Text>
           </View>
           <Text className={styles.due_date}>{dueDate}</Text>

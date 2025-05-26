@@ -26,3 +26,12 @@ export const STATUS = [
   { label: 'In Progress', value: 'in_progress' },
   { label: 'Completed', value: 'completed' },
 ];
+
+export const formatStatus = (status: string) => {
+  if (!status) return '';
+
+  return status
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
