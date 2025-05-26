@@ -1,4 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 
 import { styles } from './styles';
@@ -28,9 +30,30 @@ const TaskItem = ({
   priority,
   dueDate,
 }: TaskItemProps & { status: StatusKey; priority: PriorityKey }) => {
+  const [error, setError] = useState(false);
   return (
     <View className={styles.container}>
-      <Image source={{ uri: image }} className={styles.image} resizeMode="cover" alt="Task Image" />
+      {!error && image ? (
+        <Image
+          source={{ uri: image }}
+          onError={() => {
+            setError(true);
+          }}
+          className={styles.image}
+          resizeMode="cover"
+          alt="Task Image"
+        />
+      ) : (
+        <View className={[styles.image, 'bg-neutral-400'].join(' ')}>
+          <MaterialIcons
+            name="image-not-supported"
+            className="absolute left-[50%] top-[50%] -translate-x-1/2 -translate-y-1/2"
+            size={24}
+            color="#ffffff"
+          />
+        </View>
+      )}
+
       <View className={styles.infoContainer}>
         <View className="flex flex-row justify-between">
           <Text className={styles.title}>{name}</Text>
