@@ -2,12 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, ScrollView, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 import { Button } from '@/components/Button';
 import Container from '@/components/Container';
 import ErrorText from '@/components/ErrorText';
 import Input from '@/components/Input';
 import Title from '@/components/Title';
+import { COMPLETED_STATUS, PRIORITY, STATUS } from '@/lib/contants';
 import { TaskFormData, taskSchema } from '@/lib/validators/taskSchema';
 import { useTaskStore } from '@/store/taskStore';
 
@@ -96,7 +98,7 @@ const Page = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <View className="h-12">
               <Input
-                placeHolderText="Image"
+                placeHolderText="Add Image URL"
                 onChangeText={onChange}
                 onBlur={onBlur}
                 value={value}
@@ -112,12 +114,34 @@ const Page = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <View className="h-12">
-              <Input
-                placeHolderText="Status"
-                onChangeText={onChange}
-                onBlur={onBlur}
+              <Dropdown
+                data={STATUS}
+                style={{
+                  flex: 1,
+                  paddingHorizontal: 12,
+                  paddingVertical: 8,
+                  backgroundColor: '#e5e5e5',
+                  borderRadius: 8,
+                }}
+                placeholderStyle={{
+                  color: '#737373',
+                  fontSize: 14,
+                  fontWeight: '300',
+                }}
+                selectedTextStyle={{
+                  color: '#000',
+                  fontSize: 14,
+                  fontWeight: '500',
+                }}
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder="Status"
                 value={value}
-                placeholderTextColor="text-neutral-500"
+                onChange={(status) => {
+                  onChange(status.value);
+                }}
+                onBlur={onBlur}
               />
             </View>
           )}
@@ -129,12 +153,34 @@ const Page = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <View className="h-12">
-              <Input
-                placeHolderText="Priority"
-                onChangeText={onChange}
-                onBlur={onBlur}
+              <Dropdown
+                data={PRIORITY}
+                style={{
+                  flex: 1,
+                  paddingHorizontal: 12,
+                  paddingVertical: 8,
+                  backgroundColor: '#e5e5e5',
+                  borderRadius: 8,
+                }}
+                placeholderStyle={{
+                  color: '#737373',
+                  fontSize: 14,
+                  fontWeight: '300',
+                }}
+                selectedTextStyle={{
+                  color: '#000',
+                  fontSize: 14,
+                  fontWeight: '500',
+                }}
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder="Priority"
                 value={value}
-                placeholderTextColor="text-neutral-500"
+                onChange={(priority) => {
+                  onChange(priority.value);
+                }}
+                onBlur={onBlur}
               />
             </View>
           )}
@@ -146,12 +192,35 @@ const Page = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <View className="h-12">
-              <Input
-                placeHolderText="Is Completed"
-                onChangeText={onChange}
-                onBlur={onBlur}
+              <Dropdown
+                data={COMPLETED_STATUS}
+                style={{
+                  flex: 1,
+                  paddingHorizontal: 12,
+                  paddingVertical: 8,
+                  backgroundColor: '#e5e5e5',
+                  borderRadius: 8,
+                }}
+                placeholderStyle={{
+                  color: '#737373',
+                  fontSize: 14,
+                  fontWeight: '300',
+                }}
+                selectedTextStyle={{
+                  color: '#000',
+                  fontSize: 14,
+                  fontWeight: '500',
+                }}
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder="Completed Status"
+                searchPlaceholder="Search..."
                 value={value}
-                placeholderTextColor="text-neutral-500"
+                onChange={(completedStatus) => {
+                  onChange(completedStatus.value);
+                }}
+                onBlur={onBlur}
               />
             </View>
           )}

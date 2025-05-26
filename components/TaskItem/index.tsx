@@ -6,17 +6,7 @@ import { Image, Text, View } from 'react-native';
 import { styles } from './styles';
 import { TaskItemProps } from './types';
 
-const STATUS_COLOR = {
-  pending: 'bg-violet-500',
-  in_progress: 'bg-teal-500',
-  completed: 'bg-sky-500',
-};
-
-const PRIORITY_COLOR = {
-  low: 'bg-yellow-500',
-  medium: 'bg-orange-500',
-  high: 'bg-red-500',
-};
+import { PRIORITY_COLOR, STATUS_COLOR } from '@/lib/contants';
 
 type StatusKey = keyof typeof STATUS_COLOR;
 type PriorityKey = keyof typeof PRIORITY_COLOR;
