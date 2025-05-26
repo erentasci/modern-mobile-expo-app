@@ -24,7 +24,6 @@ const Page = () => {
   const [currentList, setCurrentList] = useState<List>();
   const [searchText, setSearchText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [currentListLoading, setCurrentListLoading] = useState<boolean>(false);
   const reanimatedRef = useRef<SwipeableMethods>(null);
 
   useEffect(() => {
@@ -51,14 +50,6 @@ const Page = () => {
       setLoading(true);
     }
   }, [tasks, currentList]);
-
-  // useEffect(() => {
-  //   if (currentList) {
-  //     setCurrentListLoading(false);
-  //   } else {
-  //     setCurrentListLoading(true);
-  //   }
-  // }, [currentList]);
 
   useEffect(() => {
     if (searchText.trim() !== '') {
