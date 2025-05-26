@@ -21,7 +21,6 @@ const TaskItem = ({
   dueDate,
 }: TaskItemProps & { status: StatusKey; priority: PriorityKey }) => {
   const [error, setError] = useState(false);
-  console.log('ITEM:', status, priority, isCompleted);
 
   return (
     <View className={styles.container}>

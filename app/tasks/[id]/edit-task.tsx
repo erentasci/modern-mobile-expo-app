@@ -32,9 +32,10 @@ const Page = () => {
 
   useEffect(() => {
     const fetchCurrentTask = async () => {
+      setLoading(true);
       if (id) {
         const currentTask = await getTaskById(Number(id));
-        setCurrentListId(currentTask?.list_id || 0);
+        setCurrentListId(currentTask?.list_id ?? 0);
         reset({
           name: currentTask?.name,
           description: currentTask?.description || '',
@@ -55,18 +56,12 @@ const Page = () => {
           due_date: currentTask?.due_date ?? undefined,
         });
       }
+
+      setLoading(false);
     };
 
     fetchCurrentTask();
   }, [id]);
-
-  useEffect(() => {
-    if (currentListId) {
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [currentListId]);
 
   const onSubmit = async (FormData: TaskFormData) => {
     try {

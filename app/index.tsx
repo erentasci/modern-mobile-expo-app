@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -22,23 +22,25 @@ export default function Home() {
   const reanimatedRef = useRef<SwipeableMethods>(null);
 
   useEffect(() => {
-    fetchLists();
+    const loadLists = async () => {
+      setLoading(true);
+      await fetchLists();
+      setLoading(false);
+    };
+    loadLists();
   }, []);
 
   useEffect(() => {
-    if (lists) {
-      setLoading(false);
-    } else {
+    const fetchData = async () => {
       setLoading(true);
-    }
-  }, [lists]);
-
-  useEffect(() => {
-    if (searchText.trim() !== '') {
-      getListByTerm(searchText);
-    } else {
-      fetchLists();
-    }
+      if (searchText.trim() !== '') {
+        await getListByTerm(searchText);
+      } else {
+        await fetchLists();
+      }
+      setLoading(false);
+    };
+    fetchData();
   }, [searchText]);
 
   return (
@@ -60,8 +62,13 @@ export default function Home() {
         }}
         hasFilter={false}
       />
+
       {loading ? (
         <SkeletonList />
+      ) : lists.length === 0 ? (
+        <View className="mt-10">
+          <Title title="No Lists Found" fontStyle="text-xl text-gray-400 underline mx-auto" />
+        </View>
       ) : (
         <FlatList
           data={lists}
@@ -81,9 +88,6 @@ export default function Home() {
           )}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
-            <Title title="No Lists Found" fontStyle="text-xl text-gray-400 underline mx-auto" />
-          }
         />
       )}
     </Container>

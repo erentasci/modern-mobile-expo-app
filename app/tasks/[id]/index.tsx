@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View } from 'react-native';
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -27,41 +27,42 @@ const Page = () => {
   const reanimatedRef = useRef<SwipeableMethods>(null);
 
   useEffect(() => {
-    const fetchCurrentList = async () => {
+    const fetchAll = async () => {
+      setLoading(true);
+
       if (id) {
-        const list = await getList(Number(id));
+        const [list] = await Promise.all([getList(Number(id)), fetchTasksByListId(Number(id))]);
+
         if (list) {
           setCurrentList(list);
         } else {
           console.error('List not found');
         }
       }
+
+      setLoading(false);
     };
 
-    setTasks([]);
-    fetchTasksByListId(Number(id));
-    fetchCurrentList();
+    fetchAll();
   }, [id]);
 
   useEffect(() => {
-    if (tasks && currentList) {
-      setLoading(false);
-    } else {
+    const fetchSearch = async () => {
       setLoading(true);
-    }
-  }, [tasks, currentList]);
+      if (searchText.trim() !== '') {
+        await getTaskByTerm(searchText, Number(id));
+      } else {
+        await fetchTasksByListId(Number(id));
+      }
+      setLoading(false);
+    };
 
-  useEffect(() => {
-    if (searchText.trim() !== '') {
-      getTaskByTerm(searchText, Number(id));
-    } else {
-      fetchTasksByListId(Number(id));
-    }
+    fetchSearch();
   }, [searchText]);
 
   return (
     <Container>
-      {loading ? (
+      {loading || !currentList ? (
         <SkeletonTaskItemHeader />
       ) : (
         <Title
@@ -86,6 +87,10 @@ const Page = () => {
       />
       {loading ? (
         <SkeletonTaskItem />
+      ) : tasks.length === 0 ? (
+        <View className="mt-10">
+          <Title title="No Tasks Found" fontStyle="text-xl text-gray-400 underline mx-auto" />
+        </View>
       ) : (
         <FlatList
           data={tasks}
@@ -120,9 +125,6 @@ const Page = () => {
           )}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={
-            <Title title="No Tasks Found" fontStyle="text-xl text-gray-400 underline mx-auto" />
-          }
         />
       )}
     </Container>
