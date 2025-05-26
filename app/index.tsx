@@ -41,8 +41,6 @@ export default function Home() {
     }
   }, [searchText]);
 
-  console.log('LOADING', loading);
-
   return (
     <Container>
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
