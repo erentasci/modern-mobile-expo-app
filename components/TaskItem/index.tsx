@@ -28,8 +28,6 @@ const TaskItem = ({
   priority,
   dueDate,
 }: TaskItemProps & { status: StatusKey; priority: PriorityKey }) => {
-  console.log('Due Date:', dueDate);
-
   return (
     <View className={styles.container}>
       <Image source={{ uri: image }} className={styles.image} resizeMode="cover" alt="Task Image" />
