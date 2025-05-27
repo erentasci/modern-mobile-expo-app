@@ -1,11 +1,9 @@
 import '../global.css';
 
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 
-import { initDB } from '@/db';
 import DatabaseProvider from '@/providers/database-provider';
 
 // This is the default configuration
@@ -15,10 +13,6 @@ configureReanimatedLogger({
 });
 
 export default function Layout() {
-  useEffect(() => {
-    initDB();
-  }, []);
-
   return (
     <DatabaseProvider>
       <GestureHandlerRootView>

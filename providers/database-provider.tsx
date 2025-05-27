@@ -1,22 +1,16 @@
-import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { SQLiteProvider } from 'expo-sqlite';
 import { Suspense } from 'react';
 import { ActivityIndicator } from 'react-native';
 
-import migrations from '../drizzle/migrations';
-
-import { DATABASE_NAME, db } from '@/db';
+import { DATABASE_NAME } from '@/db';
 
 interface DatabaseProviderProps {
   children: React.ReactNode;
 }
 
 export default function DatabaseProvider(props: DatabaseProviderProps) {
-  const { success, error } = useMigrations(db, migrations);
+  // const { success, error } = useMigrations(db, migrations);
   // console.log('success', success);
-  // if (error) {
-  //   console.error('Migration error:', error);
-  // }
 
   return (
     <Suspense fallback={<ActivityIndicator size="large" />}>
